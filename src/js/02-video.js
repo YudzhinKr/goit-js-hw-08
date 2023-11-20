@@ -1,20 +1,9 @@
-import Vimeo from 'vimeo-player';
-import debounce from 'lodash/debounce';
-import throttle from 'lodash/throttle';
+import Vimeo from '@vimeo/player';
 
-const player = new Vimeo('vimeo-player');
+const iframe = document.getElementById('vimeo-player');
+const player = new Vimeo.Player(iframe);
 
 player.on('timeupdate', function (data) {
-  const currentTime = data.seconds;
-  localStorage.setItem('videoplayer-current-time', currentTime);
+  console.log('Current time:', data.seconds);
+  console.log('Percent played:', data.percent);
 });
-
-const savedTime = localStorage.getItem('videoplayer-current-time');
-if (savedTime !== null) {
-  player
-    .setCurrentTime(savedTime)
-    .then(function (seconds) {})
-    .catch(function (error) {
-      console.error('Помилка встановлення часу відтворення:', error);
-    });
-}
